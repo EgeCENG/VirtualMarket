@@ -49,7 +49,7 @@ namespace testPA3
         //Eğer Ürün Adına Ait Node Ağaçta varsa o zaman yeni Node un ürün infosu ağactaki ilgili düğümün ürün listine ekleniyor.
         public void AddProduct(BSTProductNode localRoot,Product newProduct)
         {
-            if (newProduct.ProductName==localRoot.productName)
+            if (newProduct.Name==localRoot.productName)
             {
                 localRoot.productInfo.Add(newProduct);
                 return;

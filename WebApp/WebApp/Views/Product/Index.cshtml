@@ -1,4 +1,4 @@
-﻿
+﻿@model WebApp.
 @{
     ViewBag.Title = "Index";
 }
@@ -9,17 +9,12 @@
         <form>
             <div class="form-group">
                 <label for="">Name</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter product name">
+     @Html.TextAreaFor()
             </div>
+            
             <div class="form-group">
-                <label for="exampleInputPassword1"></label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input">
-                    Check me out
-                </label>
+                <label for="">Name</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter product name">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

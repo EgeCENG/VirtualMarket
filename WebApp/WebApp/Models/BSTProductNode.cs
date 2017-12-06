@@ -17,7 +17,7 @@ namespace testPA3
           /* Console.WriteLine("Düğüm Grubu : {0} ", productName);
             foreach (var item in productInfo)
             {
-                Console.WriteLine("Ürün Kategori : {0}|Ürün Adı : {1}|Marka : {2}|Model : {3}|Adet : {4}|Maliyet : {5}|Satış : {6}|Açıklama : {7}", item.ProductCategory, item.ProductName, item.ProductBrand, item.ProductModel, item.ProductCount, item.ProductCost, item.ProductPrice, item.ProductDesc);
+                Console.WriteLine("Ürün Kategori : {0}|Ürün Adı : {1}|Marka : {2}|Model : {3}|Adet : {4}|Maliyet : {5}|Satış : {6}|Açıklama : {7}", item.Category, item.Name, item.Brand, item.Model, item.Count, item.Cost, item.Price, item.Desc);
             }*/
         }
     }

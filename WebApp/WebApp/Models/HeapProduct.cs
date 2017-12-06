@@ -44,7 +44,7 @@ namespace testPA3
             if (index!=0)
             {
                 parentIndex = GetParentIndex(index);
-                if (heapProductList[parentIndex].ProductPrice>heapProductList[index].ProductPrice)
+                if (heapProductList[parentIndex].Price>heapProductList[index].Price)
                 {
                     tempProduct = heapProductList[parentIndex];
                     heapProductList[parentIndex] = heapProductList[index];
