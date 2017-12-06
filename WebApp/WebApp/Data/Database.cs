@@ -11,12 +11,12 @@ namespace WebApp.Data
 {
     public class Database
     {
-        private string path = "products.txt";
+        private string path = "products.json";
 
-        public List<Product> GetProduct()
+        public List<Product> Deserializer()
         {
             string jsonText;
-            if (!File.Exists(path))
+            if (File.Exists(path))
             {
                 jsonText = File.ReadAllText(path);
                 if (jsonText != "")
@@ -26,33 +26,49 @@ namespace WebApp.Data
                 }
                 else
                 {
-                    Debug.WriteLine("The file is empty");
+                    Debug.WriteLine("The file is empty"); 
                 }
             }
             else
             {
                 Debug.WriteLine("The file is not exist");
             }
-            return null;
+            return new List<Product>();
         }
 
-        public void WriteProduct(List<Product> products)
+        public void Serializer(List<Product> products)
         {
-            
+            string json = JsonConvert.SerializeObject(products);
+            if (!File.Exists(path))
+                File.Create(path).Close();  
+            File.WriteAllText(path, json);
+
         }
         public bool Add(Product product)
         {
-            List<Product> products = GetProduct();
+            List<Product> products = Deserializer();
             products.Add(product);
+            Serializer(products);
             return true;
         }
         public bool Delete(Product product)
         {
+            List<Product> products = Deserializer();
+            products.Remove(products.Find(x => x.Id == product.Id));
+            Serializer(products);
             return true;
         }
         public bool Delete(int id)
         {
+            List<Product> products = Deserializer();
+            products.Remove(products.Find(x => x.Id == id));
+            Serializer(products);
             return true;
+        }
+        public void DeleteFile()
+        {
+            if (File.Exists(path))
+            File.Delete(path);
         }
     }
 }

@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApp.Data;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
+        
     {
         public ActionResult Index()
         {
+            Product p = new Product(1,"Test");
             return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
+            
             return View();
         }
 
