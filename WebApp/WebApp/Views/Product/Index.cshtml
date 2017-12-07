@@ -1,23 +1,101 @@
-﻿@model WebApp.
+﻿@model IEnumerable<WebApp.Product>
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Add Product</h2>
+<h2>Index</h2>
 <div class="row">
-    <div class="col-md-4">
-        <form>
-            <div class="form-group">
-                <label for="">Name</label>
-     @Html.TextAreaFor()
-            </div>
-            
-            <div class="form-group">
-                <label for="">Name</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter product name">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <table class="table">
+    @using (Html.BeginForm("Execute","Product"))
+    {
+        <tr>
+            <td>Process Type</td>
+            <td>@Html.DropDownList("process", ViewData["process"] as List<SelectListItem>, new { htmlAttributes = new { @class = "form-control" }})</td>
+        </tr>
+        <tr>
+            <td>Search by </td>
+            <td>@Html.DropDownList("byx", ViewData["byx"] as List<SelectListItem>, new { htmlAttributes = new { @class = "form-control" }})</td>
+        </tr>
+        <tr>
+            <td>Text</td>
+            <td>@Html.TextBox("text")</td>
+        </tr>
+        <tr>
+            <td>
+                    <input type="submit" value="Execute" class="btn btn-default"/>
+            </td>
+        </tr>
+    }
+    </table>
+   
+</div>
+<div class="row">
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Count)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Desc)
+        </th>
+        <th></th>
+    </tr>
 
-    </div>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Brand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Desc)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
 </div>

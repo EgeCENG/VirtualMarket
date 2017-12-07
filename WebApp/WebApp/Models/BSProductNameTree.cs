@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace testPA3
+namespace WebApp
 {
     class BSProductNameTree
     {
@@ -34,22 +34,22 @@ namespace testPA3
         {
             if (localRoot==null)            
                 return false;
-            if (localRoot.productName==pName)            
+            if (localRoot.subCategory==pName)            
                 return true;
-            else if (pName.CompareTo(localRoot.productName)==-1)
+            else if (pName.CompareTo(localRoot.subCategory)==-1)
             {
                return Search(localRoot.leftChild, pName);
             }
-            else if (pName.CompareTo(localRoot.productName) == 1)
+            else if (pName.CompareTo(localRoot.subCategory) == 1)
             {
                 return Search(localRoot.rightChild, pName);
             }
             return false;
         }
         //Eğer Ürün Adına Ait Node Ağaçta varsa o zaman yeni Node un ürün infosu ağactaki ilgili düğümün ürün listine ekleniyor.
-        public void AddProduct(BSTProductNode localRoot,Product newProduct)
+        private void AddProduct(BSTProductNode localRoot,Product newProduct)
         {
-            if (newProduct.Name==localRoot.productName)
+            if (newProduct.Name==localRoot.subCategory)
             {
                 localRoot.productInfo.Add(newProduct);
                 return;
@@ -70,7 +70,7 @@ namespace testPA3
             else
             {
                 //Düğümün ilgili alanı (Örn: Dizüstü Bilgisayar) ağaçta var ise o düğüme yeni ürünün Marka,Model vs bilgileri ürün listesine ekleniyor
-                if (Search(_root,newNode.productName))
+                if (Search(_root,newNode.subCategory))
                 {
                     AddProduct(_root, newNode.productInfo[0]);
                 }
@@ -82,7 +82,7 @@ namespace testPA3
                     while (true)
                     {
                         parent = current;                       
-                        if (newNode.productName.CompareTo(_root.productName) == -1)
+                        if (newNode.subCategory.CompareTo(_root.subCategory) == -1)
                         {
                             current = current.leftChild;
                             if (current==null)

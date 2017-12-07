@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebApp;
 using WebApp.Models;
 using WebApp.Data;
 
@@ -24,10 +25,10 @@ namespace UnitTest
         public void TestAdd()
         {
             // arrange  
-            Product product = new Product(rnd.Next(100),"TestProduct");
+            Product product = new Product(Guid.NewGuid().ToString(), "TestProduct");
             // act  
             db.Add(product);
-            Product dbProduct = db.Deserializer()[0];
+            Product dbProduct = db.Deserialize()[0];
             // assert  
             Assert.AreEqual(dbProduct.Id,product.Id);
             db.DeleteFile();
@@ -37,12 +38,12 @@ namespace UnitTest
         public void TestDelete()
         {
             // arrange  
-            Product product = new Product(rnd.Next(100), "TestProduct");
+            Product product = new Product(Guid.NewGuid().ToString(), "TestProduct");
             // act  
             db.Add(product);
-            Product dbProduct = db.Deserializer()[0];
+            Product dbProduct = db.Deserialize()[0];
             db.Delete(dbProduct);
-            List<Product> products = db.Deserializer();
+            List<Product> products = db.Deserialize();
             // assert  
             Assert.AreEqual(products.Count ,0);
         }
@@ -51,10 +52,10 @@ namespace UnitTest
         public void TestGet()
         {
             // arrange  
-            Product product = new Product(rnd.Next(100), "TestProduct");
+            Product product = new Product(Guid.NewGuid().ToString(), "TestProduct");
             // act  
             db.Add(product);
-            List<Product> products = db.Deserializer();
+            List<Product> products = db.Deserialize();
             db.DeleteFile();
             // assert  
             Assert.AreNotEqual(products.Count,0);

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace testPA3
+namespace WebApp
 {
-    class Product
+    public class Product
     {
         //Ürüne ait özellikler
+        [Key]
+        public string Id { get; set; }
         public string Category { get; set; }
         public string Name { get; set; }
         public string Brand { get; set; }
@@ -29,6 +32,12 @@ namespace testPA3
             this.Cost = pCost;
             this.Price = pPrice;
             this.Desc = pDesc;
+        }
+
+        public Product(string id, string name)
+        {
+            Id = id;
+            Name = name;
         }
     }
 }

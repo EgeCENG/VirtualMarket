@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Data;
-using WebApp.Models;
 
 namespace WebApp.Controllers
 {
@@ -13,7 +12,6 @@ namespace WebApp.Controllers
     {
         public ActionResult Index()
         {
-            Product p = new Product(1,"Test");
             return View();
         }
 
