@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApp
 {
-    class BSProductNameTree
+    public class BSProductNameTree
     {
         private BSTProductNode _root;
         private int _subCategoryCount = 0;
@@ -29,6 +29,7 @@ namespace WebApp
                 InOrder(localRoot.rightChild);
             }
         }
+
         //Yeni gelen düğüm ile ilgili alan ağaçta varmı o kontrol ediliyor.
         public bool Search(BSTProductNode localRoot,string pName)
         {
@@ -51,7 +52,7 @@ namespace WebApp
         {
             if (newProduct.Name==localRoot.subCategory)
             {
-                localRoot.productInfo.Add(newProduct);
+                localRoot.productList.Add(newProduct);
                 return;
             }
             if (localRoot!=null)
@@ -72,7 +73,7 @@ namespace WebApp
                 //Düğümün ilgili alanı (Örn: Dizüstü Bilgisayar) ağaçta var ise o düğüme yeni ürünün Marka,Model vs bilgileri ürün listesine ekleniyor
                 if (Search(_root,newNode.subCategory))
                 {
-                    AddProduct(_root, newNode.productInfo[0]);
+                    AddProduct(_root, newNode.productList[0]);
                 }
                 //İlgili alan yok ise standart BST ekleme işlemi yapılıyor
                 else

@@ -9,13 +9,8 @@ namespace WebApp
 {
     class Category
     {
-        //Kategorilerin tutulacağı HashTable
-        Hashtable category = new Hashtable();        
-        //Category constructors
-        public Category() { }
-        public Category(string category_name, BSProductNameTree productsOfCategory)
-        {
-            category.Add(category_name, productsOfCategory);
-        }
+        public string Id { get; set; }
+        public string Name { get; set; }
+
     }
 }

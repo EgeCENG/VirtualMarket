@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,7 @@ namespace WebApp.Controllers
 {
     public class ProductController : Controller
     {
-        Database db = new Database();
+        ProductRepository productRepository = new ProductRepository();
         // GET: Product
         public void PrepareDropdownListData()
         {
@@ -28,9 +29,8 @@ namespace WebApp.Controllers
         }
         public ActionResult Index()
         {
-            List<Product> products = db.Deserialize();
             PrepareDropdownListData();
-            return View(products);
+            return View(productRepository.GetAllProduct());
         }
         [HttpPost]
         public ActionResult Execute(string process,string byx , string text)
@@ -50,15 +50,15 @@ namespace WebApp.Controllers
                     break;
 
             }
-            switch (process)
+      /*      switch (process)
             {
                 case "0":
-                    db.DeleteBy(exp);
+                    productRepository.DeleteBy(exp);
                     break;
                 case "1":
-                    return View(db.SearchBy(exp));
+            //        return View(productRepository.SearchBy(exp));
               
-            }
+            }*/
             return RedirectToAction("Index");
         }
 
@@ -81,7 +81,7 @@ namespace WebApp.Controllers
             try
             {
                 product.Id = Guid.NewGuid().ToString();
-                db.Add(product);
+                productRepository.Add(product);
                 return RedirectToAction("Index");
             }
             catch(Exception ex)
@@ -94,7 +94,7 @@ namespace WebApp.Controllers
         // GET: Product/Edit/5
         public ActionResult Edit(string id)
         {
-            return View(db.Get(id));
+            return View(productRepository.Get(id));
         }
 
         // POST: Product/Edit/5
@@ -104,7 +104,7 @@ namespace WebApp.Controllers
             try
             {
                
-                db.Update(product);
+                productRepository.Update(product);
                 return RedirectToAction("Index");
             }
             catch
@@ -116,7 +116,7 @@ namespace WebApp.Controllers
         // GET: Product/Delete/5
         public ActionResult Delete(string id)
         {
-            db.Delete(id);
+            productRepository.Delete(id);
             return RedirectToAction("Index");
         }
 

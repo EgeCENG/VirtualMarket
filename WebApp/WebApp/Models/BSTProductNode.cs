@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 
 namespace WebApp
 {
-    class BSTProductNode
+    public class BSTProductNode
     {
         public string subCategory;
-        public List<Product> productInfo = new List<Product>();
+        public List<Product> productList;
         public BSTProductNode leftChild;
         public BSTProductNode rightChild;
 
         public BSTProductNode(Product product)
         {
+            if (productList == null)
+            {
+                productList = new List<Product>();
+            }
             subCategory = product.Name;
-            productInfo.Add(product);
+            productList.Add(product);
         }
         public void DisplayNode()
         {
