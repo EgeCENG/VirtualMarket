@@ -23,6 +23,11 @@ namespace WebApp.Controllers
             byx.Add(new SelectListItem { Text = "Brand", Value = "1" });
             byx.Add(new SelectListItem { Text = "Model", Value = "2" });
 
+            List<SelectListItem> categoryList = new List<SelectListItem>();
+            categoryList.Add(new SelectListItem{Text = "Bilgisayar",Value = "bilgisayar"});
+            categoryList.Add(new SelectListItem { Text = "Bilgisayar", Value = "bilgisayar" });
+            categoryList.Add(new SelectListItem { Text = "Bilgisayar", Value = "bilgisayar" });
+            categoryList.Add(new SelectListItem { Text = "Bilgisayar", Value = "bilgisayar" });
             ViewData["process"] = process;
             ViewData["byx"] = byx;
 
@@ -50,23 +55,18 @@ namespace WebApp.Controllers
                     break;
 
             }
-      /*      switch (process)
+            switch (process)
             {
                 case "0":
                     productRepository.DeleteBy(exp);
                     break;
                 case "1":
-            //        return View(productRepository.SearchBy(exp));
+                    return View(productRepository.SearchBy(exp));
               
-            }*/
+            }
             return RedirectToAction("Index");
         }
 
-        // GET: Product/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         // GET: Product/Create
         public ActionResult Create()

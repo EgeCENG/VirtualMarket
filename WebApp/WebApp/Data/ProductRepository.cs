@@ -24,13 +24,13 @@ namespace WebApp.Data
         }
         public Product Get(string id)
         {
-            Product product = jsonAdapter.Deserialize().Find(x => x.Id == id);
+            Product product = jsonAdapter.Deserialize<Product>().Find(x => x.Id == id);
             return product;
         }
         public bool Add(Product product)
         {
             
-            List<Product> products = jsonAdapter.Deserialize();
+            List<Product> products = jsonAdapter.Deserialize<Product>();
 
             foreach (Product item in products)
             {
@@ -51,21 +51,21 @@ namespace WebApp.Data
         }
         public bool Delete(Product product)
         {
-            List<Product> products = jsonAdapter.Deserialize();
+            List<Product> products = jsonAdapter.Deserialize<Product>();
             products.Remove(products.Find(x => x.Id == product.Id));
             jsonAdapter.Serialize(products);
             return true;
         }
         public bool Delete(string id)
         {
-            List<Product> products = jsonAdapter.Deserialize();
+            List<Product> products = jsonAdapter.Deserialize<Product>();
             products.Remove(products.Find(x => x.Id.Equals(id)));
             jsonAdapter.Serialize(products);
             return true;
         }
         public bool DeleteBy(Func<Product, bool> expression)
         {
-            List<Product> products = jsonAdapter.Deserialize();
+            List<Product> products = jsonAdapter.Deserialize<Product>();
             var select = products.Where(expression);
             foreach (var item in select)
             {
@@ -76,7 +76,7 @@ namespace WebApp.Data
         }
         public void Update(Product product)
         {
-            List<Product> products = jsonAdapter.Deserialize();
+            List<Product> products = jsonAdapter.Deserialize<Product>();
             Product dbProduct = products.Find(x => x.Id == product.Id);
             products.Remove(dbProduct);
             products.Add(product);
@@ -84,10 +84,10 @@ namespace WebApp.Data
 
         }
 
-        public void SearchBy(Func<Product, bool> expression)
+        public List<Product> SearchBy(Func<Product, bool> expression)
         {
-            List<Product> products = jsonAdapter.Deserialize();
-            products = (List<Product>) products.Where(expression);
+            List<Product> products = jsonAdapter.Deserialize<Product>();
+            return (List<Product>) products.Where(expression);
         }
 
         public List<Product> GetAllProduct()
@@ -100,22 +100,11 @@ namespace WebApp.Data
                 TreeToList(tree.GetRoot(),products);
             }
             return products;
-        }
-        public void TreeToList(BSTProductNode node,List<Product> products)
-        {
-            if (node == null)
-            {
-                return;
-            }
-            products.AddRange(node.productList);
-            TreeToList(node.leftChild,products);
-            TreeToList(node.rightChild,products);
-        }
-      
+        }    
         //Ağaç işleri
-        public void FillTree()
+        private void FillTree()
         {
-            List<Product> products = jsonAdapter.Deserialize();
+            List<Product> products =  jsonAdapter.Deserialize<Product>();
             var category = categoryHash.Keys;
             foreach (Product item in products)
             {
@@ -132,5 +121,15 @@ namespace WebApp.Data
                 }
             }
         }
+        private void TreeToList(BSTProductNode node, List<Product> products)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            products.AddRange(node.productList);
+            TreeToList(node.leftChild, products);
+            TreeToList(node.rightChild, products);
+        } 
     }
 }

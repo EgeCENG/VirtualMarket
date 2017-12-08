@@ -10,9 +10,9 @@ namespace WebApp.Data
 {
     public class JsonAdapter
     {
-        private string path = HttpContext.Current.Server.MapPath("~/bin") + "products.json";
+        private string path = HttpContext.Current.Server.MapPath("~/Json/") + "products.json";
 
-        public List<Product> Deserialize()
+        public List<T> Deserialize<T>()
         {
             string jsonText;
             if (File.Exists(path))
@@ -20,7 +20,7 @@ namespace WebApp.Data
                 jsonText = File.ReadAllText(path);
                 if (jsonText != "")
                 {
-                    List<Product> products = JsonConvert.DeserializeObject<List<Product>>(jsonText);
+                    List<T> products = JsonConvert.DeserializeObject<List<T>>(jsonText);
                     return products;
                 }
                 else
@@ -32,7 +32,7 @@ namespace WebApp.Data
             {
                 Debug.WriteLine("The file is not exist");
             }
-            return new List<Product>();
+            return new List<T>();
         }
 
         public void Serialize(List<Product> products)
