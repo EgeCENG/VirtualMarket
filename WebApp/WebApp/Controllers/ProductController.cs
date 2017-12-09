@@ -24,7 +24,7 @@ namespace WebApp.Controllers
             byx.Add(new SelectListItem { Text = "Model", Value = "2" });
 
             List<SelectListItem> categoryList = new List<SelectListItem>();
-            foreach (var item in productRepository.categoryHash.Keys)
+            foreach (var item in productRepository.CategoryHash.Keys)
             {
                 categoryList.Add(new SelectListItem { Text = item.ToString(), Value = item.ToString() });
             }          

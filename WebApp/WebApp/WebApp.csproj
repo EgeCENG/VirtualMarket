@@ -155,7 +155,6 @@
     <Compile Include="Models\BSProductNameTree.cs" />
     <Compile Include="Models\BSTProductNode.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\DescDictionary.cs" />
     <Compile Include="Models\HeapProduct.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Sale.cs" />

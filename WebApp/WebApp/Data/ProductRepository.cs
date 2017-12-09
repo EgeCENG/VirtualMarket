@@ -12,18 +12,27 @@ namespace WebApp.Data
 {
     public class ProductRepository
     {
-        public Hashtable categoryHash = new Hashtable();
+        public Hashtable CategoryHash = new Hashtable();
+        public Hashtable DescWordsHash = new Hashtable();
 
         private JsonAdapter jsonAdapter;
 
         public ProductRepository()
         {
             jsonAdapter = new JsonAdapter();
-            categoryHash.Add("Bilgisayar",new BSProductNameTree());
-            categoryHash.Add("Giyim", new BSProductNameTree());
-            categoryHash.Add("Beyaz Eşya", new BSProductNameTree());
-            categoryHash.Add("Yiyecek", new BSProductNameTree());
+            FillCategorys();
         }
+
+        private void FillCategorys()
+        {
+            CategoryHash.Add("Bilgisayar", new BSProductNameTree());
+            CategoryHash.Add("Giyim", new BSProductNameTree());
+            CategoryHash.Add("Beyaz Eşya", new BSProductNameTree());
+            CategoryHash.Add("Yiyecek", new BSProductNameTree());
+        }
+
+        #region ProductCRUD_GET
+
         public Product Get(string id)
         {
             Product product = jsonAdapter.Deserialize<Product>().Find(x => x.Id == id);
@@ -31,17 +40,17 @@ namespace WebApp.Data
         }
         public bool Add(Product product)
         {
-            
+
             List<Product> products = jsonAdapter.Deserialize<Product>();
 
             foreach (Product item in products)
             {
-                var category = categoryHash.Keys;
+                var category = CategoryHash.Keys;
                 foreach (var cat in category)
                 {
                     if (cat == item.Category)
                     {
-                        var categoryTree = categoryHash[cat] as BSProductNameTree;
+                        var categoryTree = CategoryHash[cat] as BSProductNameTree;
                         BSTProductNode node = new BSTProductNode(product);
                         categoryTree.InsertNode(node);
                     }
@@ -81,37 +90,57 @@ namespace WebApp.Data
             jsonAdapter.Serialize(products);
 
         }
-
         public List<Product> SearchBy(Func<Product, bool> expression)
         {
             List<Product> products = jsonAdapter.Deserialize<Product>();
-            return (List<Product>) products.Where(expression);
+            return (List<Product>)products.Where(expression);
         }
-
         public List<Product> GetAllProduct()
         {
             FillTree();
             List<Product> products = new List<Product>();
-            foreach (var cat in categoryHash.Keys)
+            foreach (var cat in CategoryHash.Keys)
             {
-                var tree = categoryHash[cat] as BSProductNameTree;
-                TreeToList(tree.GetRoot(),products);
+                var tree = CategoryHash[cat] as BSProductNameTree;
+                TreeToList(tree.GetRoot(), products);
             }
             return products;
-        }    
-        //Ağaç işleri
+        }
+
+        #endregion
+
+        private void DescToHashtable(Product product)
+        {
+            string[] words = product.Desc.Split(' ');
+            foreach (var word in words)
+            {
+                if (DescWordsHash.ContainsKey(word))
+                {
+                    List<Product> wordProducts = DescWordsHash[word] as List<Product>;
+                    wordProducts.Add(product);
+                }
+                else
+                {
+                    DescWordsHash.Add(word, new List<Product>());
+                }
+
+            }
+        }
+
+
+        #region TreeProcess
         private void FillTree()
         {
-            List<Product> products =  jsonAdapter.Deserialize<Product>();
-            var category = categoryHash.Keys;
+            List<Product> products = jsonAdapter.Deserialize<Product>();
+            var category = CategoryHash.Keys;
             foreach (Product item in products)
             {
-               
+                DescToHashtable(item);
                 foreach (var cat in category)
                 {
                     if (cat.Equals(item.Category))
                     {
-                        BSProductNameTree categoryTree = categoryHash[cat] as BSProductNameTree;
+                        BSProductNameTree categoryTree = CategoryHash[cat] as BSProductNameTree;
                         BSTProductNode node = new BSTProductNode(item);
                         node.productList.Add(item);
                         categoryTree.InsertNode(node);
@@ -129,5 +158,9 @@ namespace WebApp.Data
             TreeToList(node.leftChild, products);
             TreeToList(node.rightChild, products);
         }
+
+
+        #endregion
+
     }
 }
