@@ -21,6 +21,8 @@ namespace WebApp.Data
             jsonAdapter = new JsonAdapter();
             categoryHash.Add("Bilgisayar",new BSProductNameTree());
             categoryHash.Add("Giyim", new BSProductNameTree());
+            categoryHash.Add("Beyaz Eşya", new BSProductNameTree());
+            categoryHash.Add("Yiyecek", new BSProductNameTree());
         }
         public Product Get(string id)
         {
@@ -49,18 +51,14 @@ namespace WebApp.Data
             jsonAdapter.Serialize(products);
             return true;
         }
-        public bool Delete(Product product)
-        {
-            List<Product> products = jsonAdapter.Deserialize<Product>();
-            products.Remove(products.Find(x => x.Id == product.Id));
-            jsonAdapter.Serialize(products);
-            return true;
-        }
         public bool Delete(string id)
         {
-            List<Product> products = jsonAdapter.Deserialize<Product>();
+            //İlgili json veri setinin silinmesi için gerekli olan kısım
+            List<Product> products = GetAllProduct();
             products.Remove(products.Find(x => x.Id.Equals(id)));
             jsonAdapter.Serialize(products);
+            //Oluşturduğumuz veri yapısından silinmesi için gerekli olan kısım
+
             return true;
         }
         public bool DeleteBy(Func<Product, bool> expression)
@@ -130,6 +128,6 @@ namespace WebApp.Data
             products.AddRange(node.productList);
             TreeToList(node.leftChild, products);
             TreeToList(node.rightChild, products);
-        } 
+        }
     }
 }

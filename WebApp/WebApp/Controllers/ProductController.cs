@@ -24,12 +24,14 @@ namespace WebApp.Controllers
             byx.Add(new SelectListItem { Text = "Model", Value = "2" });
 
             List<SelectListItem> categoryList = new List<SelectListItem>();
-            categoryList.Add(new SelectListItem{Text = "Bilgisayar",Value = "bilgisayar"});
-            categoryList.Add(new SelectListItem { Text = "Bilgisayar", Value = "bilgisayar" });
-            categoryList.Add(new SelectListItem { Text = "Bilgisayar", Value = "bilgisayar" });
-            categoryList.Add(new SelectListItem { Text = "Bilgisayar", Value = "bilgisayar" });
+            foreach (var item in productRepository.categoryHash.Keys)
+            {
+                categoryList.Add(new SelectListItem { Text = item.ToString(), Value = item.ToString() });
+            }          
+
             ViewData["process"] = process;
             ViewData["byx"] = byx;
+            ViewData["category"] = categoryList;
 
         }
         public ActionResult Index()
@@ -71,6 +73,7 @@ namespace WebApp.Controllers
         // GET: Product/Create
         public ActionResult Create()
         {
+            PrepareDropdownListData();
             return View();
         }
 

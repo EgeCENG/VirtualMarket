@@ -14,14 +14,15 @@ namespace WebApp.Data
 
         public List<T> Deserialize<T>()
         {
+          
             string jsonText;
             if (File.Exists(path))
             {
                 jsonText = File.ReadAllText(path);
                 if (jsonText != "")
                 {
-                    List<T> products = JsonConvert.DeserializeObject<List<T>>(jsonText);
-                    return products;
+                    List<T> deserializeObject = JsonConvert.DeserializeObject<List<T>>(jsonText);
+                    return deserializeObject;
                 }
                 else
                 {
