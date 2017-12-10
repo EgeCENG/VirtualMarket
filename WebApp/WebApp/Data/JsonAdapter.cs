@@ -10,8 +10,12 @@ namespace WebApp.Data
 {
     public class JsonAdapter
     {
-        private string path = HttpContext.Current.Server.MapPath("~/Json/") + "products.json";
+        private string path;
 
+        public JsonAdapter(string path)
+        {
+            this.path = path;
+        }
         public List<T> Deserialize<T>()
         {
           
@@ -21,8 +25,8 @@ namespace WebApp.Data
                 jsonText = File.ReadAllText(path);
                 if (jsonText != "")
                 {
-                    List<T> deserializeObject = JsonConvert.DeserializeObject<List<T>>(jsonText);
-                    return deserializeObject;
+                    List<T> deserializeObjects = JsonConvert.DeserializeObject<List<T>>(jsonText);
+                    return deserializeObjects;
                 }
                 else
                 {
@@ -36,9 +40,9 @@ namespace WebApp.Data
             return new List<T>();
         }
 
-        public void Serialize(List<Product> products)
+        public void Serialize<T>(List<T> serializeObjects)
         {
-            string json = JsonConvert.SerializeObject(products);
+            string json = JsonConvert.SerializeObject(serializeObjects);
             if (!File.Exists(path))
                 File.Create(path).Close();
             File.WriteAllText(path, json);

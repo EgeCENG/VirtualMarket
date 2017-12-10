@@ -14,12 +14,13 @@ namespace WebApp.Data
     {
         public Hashtable CategoryHash = new Hashtable();
         public Hashtable DescWordsHash = new Hashtable();
+        private string path = HttpContext.Current.Server.MapPath("~/Json/") + "products.json";
 
         private JsonAdapter jsonAdapter;
 
         public ProductRepository()
         {
-            jsonAdapter = new JsonAdapter();
+            jsonAdapter = new JsonAdapter(path);
             FillCategorys();
         }
 

@@ -4,13 +4,23 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApp.Data;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
     public class UserController : Controller
     {
-        // GET: User
-        public ActionResult Index(List<Product> products )
+        private ProductRepository _productRepository;
+        private UserRepository _userRepository;
+
+        public UserController()
+        {
+            _productRepository = new ProductRepository();
+            _userRepository = new UserRepository();
+        }
+
+        public ActionResult Index()
         {
             return View();
         }
@@ -86,10 +96,46 @@ namespace WebApp.Controllers
             Session["Cart"] = shoppingCart;
         }
 
+        public void SortByPrice(string category)
+        {
+            HeapProduct heapProduct = new HeapProduct(category);
+          //  BSProductNameTree bstNameTree = productRepository.CategoryHash[category];
+           // heapProduct.Insert();
+        }
         public ActionResult Checkout()
         {
             return View();
         }
 
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public void Register(User user)
+        {
+            user.Id = Guid.NewGuid().ToString();
+            _userRepository.Add(user);
+            Session["User"] = user;
+            RedirectToAction("Index","Home");
+        }
+        
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public void Login(User user)
+        {
+            if (_userRepository.Login(user))
+            {
+                Session["User"] = user;
+                RedirectToAction("Index");
+            }
+            RedirectToAction("Login",View());
+        }
+            
     }
 }

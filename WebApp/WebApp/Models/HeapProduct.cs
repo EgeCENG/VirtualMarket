@@ -17,6 +17,7 @@ namespace WebApp
         {
             //Kullanıcı tarafından olay tetiklendiğinde gelen kategoriye göre ürünler alınacak
             _maxSize = productList.Count;
+
             heapProductList = new Product[_maxSize];
         }
         public void Insert(Product CategoryOfProduct)
