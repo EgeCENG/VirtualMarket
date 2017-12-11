@@ -26,7 +26,7 @@ namespace WebApp.Data
         public bool Login(User user)
         {
             List<User> users = _jsonAdapter.Deserialize<User>();
-            if (users.Find(x => x.Id == user.Id) != null)
+            if (users.Find(x => x.Username == user.Username && x.Password==user.Password) != null)
             return true;
             return false;
         }

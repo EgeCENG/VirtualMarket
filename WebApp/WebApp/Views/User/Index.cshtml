@@ -98,7 +98,7 @@
                      @Html.DisplayFor(modelItem => item.Desc)
                  </td>
                  <td>
-                     @Html.ActionLink("Add to shopping cart", "AddShoppingCart", new { id=item.Id }) |
+                     @Html.ActionLink("Add to shopping cart", "AddToShoppingCart", new {productId=item.Id }) |
                  </td>
              </tr>
     }

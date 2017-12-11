@@ -9,7 +9,5 @@ namespace WebApp.Models
     {
         public string Id { get; set; }
         public List<Product> ProductList { get; set;}
-        public User User { get; set; }
-
     }
 }

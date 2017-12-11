@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using WebApp.Models
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -25,6 +26,7 @@
                     <li>@Html.ActionLink("User", "Index", "User")</li>
                     <li>@Html.ActionLink("Login", "Login", "User")</li>
                     <li>@Html.ActionLink("Register", "Register", "User")</li>
+                    <li>@Html.ActionLink("Shopping Cart", "Checkout", "User")</li>
                 </ul>
             </div>
         </div>
@@ -33,7 +35,13 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year</p>
+            <p>&copy; @DateTime.Now.Year  @{
+                                              if (Session["User"]!= null)
+                                              {
+                                                  var user = Session["User"] as User;
+                                                  @: Welcome @user.Name
+                                              }
+                                          }</p>
         </footer>
     </div>
 

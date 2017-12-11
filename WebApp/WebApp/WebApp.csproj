@@ -149,6 +149,8 @@
     <Compile Include="Data\ProductRepository.cs" />
     <Compile Include="Data\JsonAdapter.cs" />
     <Compile Include="Data\Repository.cs" />
+    <Compile Include="Data\SaleRepository.cs" />
+    <Compile Include="Data\ShoppingCartRepository.cs" />
     <Compile Include="Data\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

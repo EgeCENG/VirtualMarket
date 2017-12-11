@@ -13,16 +13,20 @@ namespace WebApp.Controllers
     {
         private ProductRepository _productRepository;
         private UserRepository _userRepository;
+        private ShoppingCartRepository _shoppingCartRepository;
+        private SaleRepository _saleRepository;
 
         public UserController()
         {
             _productRepository = new ProductRepository();
             _userRepository = new UserRepository();
+            _shoppingCartRepository = new ShoppingCartRepository();
+            _saleRepository = new SaleRepository();
         }
 
         public ActionResult Index()
         {
-            return View();
+            return View(_productRepository.GetAllProduct());
         }
 
         public ActionResult Search(string search,double max,double min)
@@ -89,11 +93,22 @@ namespace WebApp.Controllers
             return RedirectToAction("Index",products);
         }
 
-        public void AddToShoppingCart(Product product)
+        [HttpPost]
+        public ActionResult AddToShoppingCart(string productId)
         {
-            List<Product> shoppingCart = Session["Cart"] as List<Product>;
-            shoppingCart.Add(product);
+            Product product = _productRepository.Get(productId);
+            ShoppingCart shoppingCart = Session["Cart"] as ShoppingCart;
+            if (shoppingCart.ProductList != null)
+            {
+                shoppingCart.ProductList.Add(product);
+            }
+            else
+            {
+                shoppingCart.ProductList = new List<Product>();
+                shoppingCart.ProductList.Add(product);
+            }
             Session["Cart"] = shoppingCart;
+            return RedirectToAction("Index","User");
         }
 
         public void SortByPrice(string category)
@@ -104,7 +119,19 @@ namespace WebApp.Controllers
         }
         public ActionResult Checkout()
         {
-            return View();
+            ShoppingCart cart = Session["Cart"] as ShoppingCart;
+
+            return View(cart);
+        }
+        [HttpPost]
+        public ActionResult Checkout(string a = "")
+        {
+            User user = Session["User"] as User;
+            ShoppingCart cart = Session["Cart"] as ShoppingCart;
+            _shoppingCartRepository.Add(cart);
+            _saleRepository.Add(new Sale{Id=Guid.NewGuid().ToString(),ShoppingCart = cart,User = user});
+            //TODO stoktan ürün düşülecek
+            return RedirectToAction("Index");
         }
 
         public ActionResult Register()
@@ -134,7 +161,11 @@ namespace WebApp.Controllers
                 Session["User"] = user;
                 RedirectToAction("Index");
             }
-            RedirectToAction("Login",View());
+            else
+            {
+                Redirect(Request.UrlReferrer.ToString());
+            }
+            
         }
             
     }

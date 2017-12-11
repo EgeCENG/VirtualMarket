@@ -8,6 +8,7 @@ namespace WebApp.Models
     public class Sale
     {
        public string Id { get; set; }
-       public ShoppingCart ShoppingCart { get; set; }
+        public User User { get; set; }
+        public ShoppingCart ShoppingCart { get; set; }
     }
 }
