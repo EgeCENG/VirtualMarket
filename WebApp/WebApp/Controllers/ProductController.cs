@@ -45,7 +45,14 @@ namespace WebApp.Controllers
         public ActionResult Index(List<Product> products)
         {
             PrepareDropdownListData();
-            return View(_productRepository.GetAllProduct());
+            if (TempData["products"] != null)
+            {
+                return View(TempData["products"] as List<Product>);
+            }
+            else
+            {
+                return View(_productRepository.GetAllProduct());
+            }
         }
         [HttpPost]
         public ActionResult Index(string process,string byx , string text)
@@ -94,7 +101,8 @@ namespace WebApp.Controllers
                     break;
 
             }
-            return RedirectToAction("Index", products);
+            TempData["products"] = products;
+            return RedirectToAction("Index","Product", products);
         }
 
 

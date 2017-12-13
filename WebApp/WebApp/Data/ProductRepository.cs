@@ -109,7 +109,7 @@ namespace WebApp.Data
             foreach (var cat in category)
             {
                 BSProductNameTree bsProductNameTree = CategoryHash[cat] as BSProductNameTree;
-                bsProductNameTree.DeleteNode(bsProductNameTree.GetRoot(), name);
+                bsProductNameTree.DeleteName(name);
             }
             List<Product> products = GetAllProduct();
             products.Remove(products.Find(x => x.Name == name));
