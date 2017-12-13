@@ -185,6 +185,10 @@ namespace WebApp
                     if (brand.Equals(item.Brand))
                     {
                         localRoot.productList.Remove(item);
+                        if (localRoot.productList.Count == 0)
+                        {
+                            break;
+                        }
                     }
                 }
                 DeleteBrand(localRoot.leftChild, brand);

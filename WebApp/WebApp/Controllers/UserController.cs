@@ -194,5 +194,10 @@ namespace WebApp.Controllers
             return View(heapProduct.heapProductList);
         }
 
+        public ActionResult SuggestSystem()
+        {
+            return View();
+        }
+
     }
 }

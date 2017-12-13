@@ -14,7 +14,7 @@ namespace WebApp.Data
     {
         public Hashtable CategoryHash = new Hashtable();
         public Hashtable DescWordsHash = new Hashtable();
-        
+
         private string path = HttpContext.Current.Server.MapPath("~/Json/") + "products.json";
 
         private JsonAdapter _jsonAdapter;
@@ -58,7 +58,7 @@ namespace WebApp.Data
         {
             CategoryHash.Add(category, new BSProductNameTree());
         }
-               
+
         #endregion
 
 
@@ -98,20 +98,35 @@ namespace WebApp.Data
             products.Remove(products.Find(x => x.Id.Equals(id)));
             _jsonAdapter.Serialize(products);
             //Oluşturduğumuz veri yapısından silinmesi için gerekli olan kısım
-
             return true;
         }
         public bool DeleteByName(string name)
         {
-           //TODO ağaçtan silme kodları gelecek
+            var category = CategoryHash.Keys;
+            foreach (var cat in category)
+            {
+                BSProductNameTree bsProductNameTree = CategoryHash[cat] as BSProductNameTree;
+                bsProductNameTree.DeleteNode(bsProductNameTree.GetRoot(), name);
+            }
+            List<Product> products = GetAllProduct();
+            products.Remove(products.Find(x=> x.Name == name));
+            _jsonAdapter.Serialize(products);
             return true;
         }
-        public bool DeleteByBrand(string name)
+        public bool DeleteByBrand(string brand)
         {
-            //TODO ağaçtan silme kodları gelecek
+            var category = CategoryHash.Keys;
+            foreach (var cat in category)
+            {
+                BSProductNameTree bsProductNameTree = CategoryHash[cat] as BSProductNameTree;
+                bsProductNameTree.DeleteBrand(bsProductNameTree.GetRoot(), brand);
+            }
+            List<Product> products = GetAllProduct();
+            products.Remove(products.Find(x => x.Brand == brand));
+            _jsonAdapter.Serialize(products);
             return true;
         }
-        public bool DeleteByModel(string name)
+        public bool DeleteByModel(string model)
         {
             //TODO ağaçtan silme kodları gelecek
             return true;
@@ -130,14 +145,14 @@ namespace WebApp.Data
         //    List<Product> products = _jsonAdapter.Deserialize<Product>();
         //    return (List<Product>)products.Where(expression);
         //}
-        
+
         public List<Product> SearchByName(string name)
         {
             BSProductNameTree tree = null;
             foreach (var cat in CategoryHash.Keys)
             {
                 tree = CategoryHash[cat] as BSProductNameTree;
-                tree.ProductSearchName(tree.GetRoot(),name);
+                tree.ProductSearchName(tree.GetRoot(), name);
             }
             return tree.searchResults;
         }
@@ -161,11 +176,11 @@ namespace WebApp.Data
             }
             return tree.searchResults;
         }
-        
+
         public List<Product> GetProductByWord(string word)
         {
-            if(DescWordsHash.ContainsKey(word))
-            return (List<Product>) DescWordsHash[word];
+            if (DescWordsHash.ContainsKey(word))
+                return (List<Product>)DescWordsHash[word];
             return null;
         }
 

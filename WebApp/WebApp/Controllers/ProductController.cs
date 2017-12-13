@@ -60,12 +60,15 @@ namespace WebApp.Controllers
 
                         case "0":
                             _productRepository.DeleteByName(text);
+                            products = _productRepository.GetAllProduct();
                             break;
                         case "1":
                            _productRepository.DeleteByBrand(text);
+                            products = _productRepository.GetAllProduct();
                             break;
                         case "2":
                             _productRepository.DeleteByModel(text);
+                            products = _productRepository.GetAllProduct();
                             break;
 
                     }
@@ -91,7 +94,7 @@ namespace WebApp.Controllers
                     break;
 
             }
-            return View(products);
+            return RedirectToAction("Index", products);
         }
 
 
