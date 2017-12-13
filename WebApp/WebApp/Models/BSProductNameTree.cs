@@ -195,6 +195,23 @@ namespace WebApp
                 DeleteBrand(localRoot.rightChild, brand);
             }
         }
+        //Modele göre silme
+        public void DeleteModel(BSTProductNode localRoot, string model)
+        {
+            if (localRoot != null)
+            {
+                foreach (var item in localRoot.productList)
+                {
+                    if (model.Equals(item.Model))
+                    {
+                        localRoot.productList.Remove(item);
+                    }
+                }
+                DeleteModel(localRoot.leftChild, model);
+                DeleteModel(localRoot.rightChild, model);
+            }
+        }
+
         //Yeni gelen düğüm ile ilgili alan ağaçta varmı o kontrol ediliyor.
         public bool Search(BSTProductNode localRoot, string pName)
         {
@@ -292,7 +309,42 @@ namespace WebApp
             InsertNode(productListForBalance[mid]);
             BalanceTree(mid + 1, high);
             BalanceTree(low, mid);
-
+        }
+        //Product update
+        public void UpdateProduct(BSTProductNode localRoot, Product updatedProduct)
+        {
+            if (localRoot != null)
+            {
+                foreach (Product item in localRoot.productList)
+                {
+                    if (updatedProduct.Id.Equals(item.Id))
+                    {
+                        item.Category = updatedProduct.Category;
+                        item.Brand = updatedProduct.Brand;
+                        item.Model = updatedProduct.Model;
+                        item.Count = updatedProduct.Count;
+                        item.Price = updatedProduct.Price;
+                    }
+                }
+                UpdateProduct(localRoot.leftChild, updatedProduct);
+                UpdateProduct(localRoot.rightChild, updatedProduct);
+            }
+        }
+        //Verilen fiyat aralıklarında arama 
+        public List<Product> SearchByPrice(BSTProductNode localRoot, double minPrice, double maxPrice)
+        {
+            List<Product> selectedProducts = new List<Product>();
+            if (localRoot != null)
+            {
+                foreach (var item in localRoot.productList)
+                {
+                    if (item.Price >= minPrice && item.Price <= maxPrice)
+                    {
+                        selectedProducts.Add(item);
+                    }
+                }
+            }
+            return selectedProducts;
         }
     }
 }
