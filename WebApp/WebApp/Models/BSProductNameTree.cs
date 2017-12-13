@@ -215,13 +215,13 @@ namespace WebApp
         //Eğer Ürün Adına Ait Node Ağaçta varsa o zaman yeni Node un ürün infosu ağactaki ilgili düğümün ürün listine ekleniyor.
         private void AddProduct(BSTProductNode localRoot, Product newProduct)
         {
-            if (newProduct.Name == localRoot.subCategory)
-            {
-                localRoot.productList.Add(newProduct);
-                return;
-            }
             if (localRoot != null)
             {
+                if (newProduct.Name == localRoot.subCategory)
+                {
+                    localRoot.productList.Add(newProduct);
+                    return;
+                }
                 AddProduct(localRoot.leftChild, newProduct);
                 AddProduct(localRoot.rightChild, newProduct);
             }

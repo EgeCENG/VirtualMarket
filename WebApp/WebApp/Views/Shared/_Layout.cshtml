@@ -33,11 +33,13 @@
                                 <li>@Html.ActionLink("Shopping Cart", "ShoppingCart", "User")</li>
                                 <li>@Html.ActionLink("Tree", "Tree", "User")</li>
                                 <li>@Html.ActionLink("Heap", "Heap", "User")</li>
+                                <li>@Html.ActionLink("Exit", "Exit", "Home")</li>
                             }
                             else
                             {
                                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                                 <li>@Html.ActionLink("Staff", "Index", "Product")</li>
+                                <li>@Html.ActionLink("Exit", "Exit", "Home")</li>
                             }
                         }
                         else
@@ -45,6 +47,7 @@
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("Login", "Login", "User")</li>
                             <li>@Html.ActionLink("Register", "Register", "User")</li>
+                        
                         }
                     }
                 </ul>

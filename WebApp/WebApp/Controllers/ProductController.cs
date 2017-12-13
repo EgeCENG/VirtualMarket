@@ -112,7 +112,7 @@ namespace WebApp.Controllers
             try
             {
                 product.Id = Guid.NewGuid().ToString();
-                if (newCategory != null)
+                if (newCategory != "")
                 {
                     _productRepository.AddCategory(newCategory);
                     product.Category = newCategory;

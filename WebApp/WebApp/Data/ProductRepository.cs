@@ -50,7 +50,10 @@ namespace WebApp.Data
             List<Product> products = _jsonAdapter.Deserialize<Product>();
             foreach (var product in products)
             {
-                CategoryHash.Add(product.Category, new BSProductNameTree());
+                if (!CategoryHash.ContainsKey(product.Category))
+                {
+                    CategoryHash.Add(product.Category, new BSProductNameTree());
+                }            
             }
         }
 
@@ -109,7 +112,7 @@ namespace WebApp.Data
                 bsProductNameTree.DeleteNode(bsProductNameTree.GetRoot(), name);
             }
             List<Product> products = GetAllProduct();
-            products.Remove(products.Find(x=> x.Name == name));
+            products.Remove(products.Find(x => x.Name == name));
             _jsonAdapter.Serialize(products);
             return true;
         }
