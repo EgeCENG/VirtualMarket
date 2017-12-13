@@ -93,18 +93,20 @@ namespace WebApp.Controllers
             return RedirectToAction("Index",products);
         }
 
-        [HttpPost]
+        
         public ActionResult AddToShoppingCart(string productId)
         {
             Product product = _productRepository.Get(productId);
             ShoppingCart shoppingCart = Session["Cart"] as ShoppingCart;
-            if (shoppingCart.ProductList != null)
+            if (shoppingCart != null)
             {
                 shoppingCart.ProductList.Add(product);
             }
             else
             {
+                shoppingCart = new ShoppingCart();
                 shoppingCart.ProductList = new List<Product>();
+                product.Count = 1;
                 shoppingCart.ProductList.Add(product);
             }
             Session["Cart"] = shoppingCart;
@@ -117,14 +119,14 @@ namespace WebApp.Controllers
           //  BSProductNameTree bstNameTree = productRepository.CategoryHash[category];
            // heapProduct.Insert();
         }
-        public ActionResult Checkout()
+        public ActionResult ShoppingCart()
         {
             ShoppingCart cart = Session["Cart"] as ShoppingCart;
 
             return View(cart);
         }
-        [HttpPost]
-        public ActionResult Checkout(string a = "")
+
+        public ActionResult Checkout()
         {
             User user = Session["User"] as User;
             ShoppingCart cart = Session["Cart"] as ShoppingCart;
@@ -140,12 +142,12 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public void Register(User user)
+        public ActionResult Register(User user)
         {
             user.Id = Guid.NewGuid().ToString();
             _userRepository.Add(user);
             Session["User"] = user;
-            RedirectToAction("Index","Home");
+            return RedirectToAction("Index","Home");
         }
         
         public ActionResult Login()
@@ -154,16 +156,17 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public void Login(User user)
+        public ActionResult Login(User user)
         {
-            if (_userRepository.Login(user))
+            User userRepo = _userRepository.Login(user);
+            if (userRepo != null)
             {
-                Session["User"] = user;
-                RedirectToAction("Index");
+                Session["User"] = userRepo;
+                return RedirectToAction("Index","Product");
             }
             else
             {
-                Redirect(Request.UrlReferrer.ToString());
+                return RedirectToAction("Login");
             }
             
         }

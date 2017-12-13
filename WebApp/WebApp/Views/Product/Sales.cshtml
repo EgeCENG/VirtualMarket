@@ -1,0 +1,51 @@
+﻿@model List<WebApp.Models.Sale>
+
+@{
+    ViewBag.Title = "Sales";
+    double income = 0;
+}
+
+<h2>Sales</h2>
+
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>User</td>
+        <td>Cost</td>
+        <td>Price</td>
+        <td>Income</td>
+
+    </tr>
+ @if (Model != null)
+ {
+     foreach (var item in Model)
+      {
+          double totalCost = 0;
+          double totalPrice = 0;
+          <tr>
+              <td>
+                  @Html.DisplayFor(modelItem => item.Id)
+              </td>
+              <td>
+                  @Html.DisplayFor(modelItem => item.User.Username)
+              </td>
+              @foreach (var product in Model[0].ShoppingCart.ProductList)
+              {
+                  double tempIncome = product.Price - product.Cost;
+                  <td>@product.Cost</td>
+                  <td>@product.Price</td>
+                  <td>@tempIncome</td>
+                          totalCost += product.Cost;
+                          totalPrice += product.Price;
+                          income += totalPrice - totalCost;
+                      }
+         
+          </tr>
+      }  
+ }
+    <tr>
+        <td colspan="4">Total Income :</td>
+        <td>@income</td>
+    </tr>
+
+</table>

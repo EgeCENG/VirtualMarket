@@ -10,5 +10,6 @@ namespace WebApp.Models
        public string Id { get; set; }
         public User User { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
+        public DateTime Date { get; set; }
     }
 }

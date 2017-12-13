@@ -32,6 +32,6 @@ namespace WebApp.Data
         public Sale GetByUser(User user)
         {
             return GetAll().Find(x => x.User.Id == user.Id);
-        }
+        } 
     }
 }

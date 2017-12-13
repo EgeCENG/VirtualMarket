@@ -1,0 +1,46 @@
+﻿@model WebApp.Models.ShoppingCart
+@{
+    ViewBag.Title = "ShoppingCart";
+}
+<div class="container">
+
+    <h1>Shopping Cart</h1><hr>
+    <table class="table table-striped table-hover table-bordered">
+        <tbody>
+        <tr>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Count</th>
+        </tr>
+        @{
+            double total = 0;
+                if (Model != null)
+                {
+                    foreach (var item in Model.ProductList)
+                     {
+                         <tr>
+                             <td>@item.Name</td>
+                             <td>@item.Brand</td>
+                             <td>@item.Model</td>
+                             <td>@item.Price</td>
+                             <td>@item.Count</td>
+                         </tr>
+                         total += item.Price;
+                     }
+                }
+            }
+            
+        <tr>
+            <td>Total Price : @total</td>
+        </tr>
+        <tr>
+            <td><a href="#" class="btn btn-primary">Continue Shopping</a></td>
+            <td colspan="4"><a href=" @Url.Action("Checkout")" type="submit" class="pull-right btn btn-success">Checkout</a></td>
+        </tr>
+        </tbody>
+    </table>          
+      
+</div>
+

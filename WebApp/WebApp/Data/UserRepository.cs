@@ -23,12 +23,16 @@ namespace WebApp.Data
             _jsonAdapter.Serialize(users);
         }
 
-        public bool Login(User user)
+        public User Login(User user)
         {
             List<User> users = _jsonAdapter.Deserialize<User>();
-            if (users.Find(x => x.Username == user.Username && x.Password==user.Password) != null)
-            return true;
-            return false;
+            return users.Find(x => x.Username == user.Username && x.Password == user.Password);
+        }
+
+        public User Get(string id)
+        {
+           List<User> users = _jsonAdapter.Deserialize<User>();
+           return users.Find(x => x.Id == id);
         }
 
     }

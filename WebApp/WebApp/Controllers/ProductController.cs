@@ -5,13 +5,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Data;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
     public class ProductController : Controller
     {
-        ProductRepository productRepository = new ProductRepository();
+        private ProductRepository _productRepository;
+        private SaleRepository _saleRepository;
         // GET: Product
+        public ProductController()
+        {
+            _productRepository = new ProductRepository();
+            _saleRepository = new SaleRepository();
+        }
         public void PrepareDropdownListData()
         {
             List<SelectListItem> process = new List<SelectListItem>();
@@ -22,9 +29,10 @@ namespace WebApp.Controllers
             byx.Add(new SelectListItem{Text = "Name",Value = "0"});
             byx.Add(new SelectListItem { Text = "Brand", Value = "1" });
             byx.Add(new SelectListItem { Text = "Model", Value = "2" });
+            byx.Add(new SelectListItem { Text = "Word", Value = "3" });
 
             List<SelectListItem> categoryList = new List<SelectListItem>();
-            foreach (var item in productRepository.CategoryHash.Keys)
+            foreach (var item in _productRepository.CategoryHash.Keys)
             {
                 categoryList.Add(new SelectListItem { Text = item.ToString(), Value = item.ToString() });
             }          
@@ -34,39 +42,59 @@ namespace WebApp.Controllers
             ViewData["category"] = categoryList;
 
         }
-        public ActionResult Index()
+        public ActionResult Index(List<Product> products)
         {
             PrepareDropdownListData();
-            return View(productRepository.GetAllProduct());
+            return View(_productRepository.GetAllProduct());
         }
         [HttpPost]
-        public ActionResult Execute(string process,string byx , string text)
+        public ActionResult Index(string process,string byx , string text)
         {
-            Func<Product, bool> exp = null;
-            switch (byx)
-            {
-                   
-                case "0":
-                    exp = x => x.Name == text;
-                    break;
-                case "1":
-                    exp = x => x.Brand == text;
-                    break;
-                case "2":
-                    exp = x => x.Model == text;
-                    break;
-
-            }
+            PrepareDropdownListData();
+            List<Product> products = null;
             switch (process)
             {
                 case "0":
-                    productRepository.DeleteBy(exp);
+                    switch (byx)
+                    {
+
+                        case "0":
+                        
+                            break;
+                        case "1":
+                            
+                            break;
+                        case "2":
+                     
+                            break;
+                        case "3":
+                           
+                            break;
+
+                    }
                     break;
                 case "1":
-                    return View(productRepository.SearchBy(exp));
-              
+                    switch (byx)
+                    {
+
+                        case "0":
+                            
+                            break;
+                        case "1":
+                          
+                            break;
+                        case "2":
+                         
+                            break;
+                        case "3":
+                            products =_productRepository.GetProductByWord(text);
+                            break;
+
+                    }
+                    break;
+
             }
-            return RedirectToAction("Index");
+            return View(products);
         }
 
 
@@ -79,12 +107,18 @@ namespace WebApp.Controllers
 
         // POST: Product/Create
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create(Product product,string newCategory)
         {
             try
             {
                 product.Id = Guid.NewGuid().ToString();
-                productRepository.Add(product);
+                if (newCategory != null)
+                {
+                    _productRepository.AddCategory(newCategory);
+                    product.Category = newCategory;
+                }
+                _productRepository.Add(product);
+                
                 return RedirectToAction("Index");
             }
             catch(Exception ex)
@@ -97,7 +131,7 @@ namespace WebApp.Controllers
         // GET: Product/Edit/5
         public ActionResult Edit(string id)
         {
-            return View(productRepository.Get(id));
+            return View(_productRepository.Get(id));
         }
 
         // POST: Product/Edit/5
@@ -107,7 +141,7 @@ namespace WebApp.Controllers
             try
             {
                
-                productRepository.Update(product);
+                _productRepository.Update(product);
                 return RedirectToAction("Index");
             }
             catch
@@ -119,7 +153,7 @@ namespace WebApp.Controllers
         // GET: Product/Delete/5
         public ActionResult Delete(string id)
         {
-            productRepository.Delete(id);
+            _productRepository.Delete(id);
             return RedirectToAction("Index");
         }
 
@@ -136,6 +170,12 @@ namespace WebApp.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Sales()
+        {
+            List<Sale> sales = _saleRepository.GetAll();
+            return View(sales);
         }
     }
 }

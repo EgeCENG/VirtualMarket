@@ -1,1 +1,2 @@
-[{"Id":"3b512357-4439-4093-bd2b-a5dc677ebf9c","Username":"test","Password":"a","Name":"mahmut","Job":"yazılı","Sex":true,"Age":20}]
+[{"Id":"14a800ae-9854-4aaa-9f23-d8c454f91763","Username":"test","Password":"a","Name":"mahmut","Job":"yazılım","Sex":true,"Age":20,"Role":0},
+{"Id":"1","Username":"batu","Password":"123","Name":"mahmut","Job":"yazılım","Sex":true,"Age":20,"Role":1}]

@@ -23,6 +23,7 @@ namespace WebApp.Data
             List<ShoppingCart> shoppingCarts = GetAll();
             cart.Id = Guid.NewGuid().ToString();
             shoppingCarts.Add(cart);
+            _jsonAdapter.Serialize(shoppingCarts);
         }
 
         public List<ShoppingCart> GetAll()

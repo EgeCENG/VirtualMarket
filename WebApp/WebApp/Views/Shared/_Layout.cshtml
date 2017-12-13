@@ -1,4 +1,5 @@
 ﻿@using WebApp.Models
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,12 +22,29 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Staff", "Index", "Product")</li>
-                    <li>@Html.ActionLink("User", "Index", "User")</li>
-                    <li>@Html.ActionLink("Login", "Login", "User")</li>
-                    <li>@Html.ActionLink("Register", "Register", "User")</li>
-                    <li>@Html.ActionLink("Shopping Cart", "Checkout", "User")</li>
+                    @{
+                        if (Session["User"] != null)
+                        {
+                            var user = Session["User"] as User;
+                            if (user.Role == 0)
+                            {
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("User", "Index", "User")</li>
+                                <li>@Html.ActionLink("Shopping Cart", "ShoppingCart", "User")</li>
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Staff", "Index", "Product")</li>
+                            }
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Login", "Login", "User")</li>
+                            <li>@Html.ActionLink("Register", "Register", "User")</li>
+                        }
+                    }
                 </ul>
             </div>
         </div>
@@ -39,7 +57,7 @@
                                               if (Session["User"]!= null)
                                               {
                                                   var user = Session["User"] as User;
-                                                  @: Welcome @user.Name
+                                                  @: Welcome @user.Username
                                               }
                                           }</p>
         </footer>
