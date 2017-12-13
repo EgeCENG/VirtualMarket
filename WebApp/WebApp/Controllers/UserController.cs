@@ -170,6 +170,29 @@ namespace WebApp.Controllers
             }
             
         }
-            
+
+        public ActionResult Tree()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Tree(string category)
+        {
+
+            return View();
+        }
+
+        public ActionResult Heap()
+        {
+            return View();
+
+        }
+        [HttpPost]
+        public ActionResult Heap(string category)
+        {
+            HeapProduct heapProduct = new HeapProduct(category);
+            return View(heapProduct.heapProductList);
+        }
+
     }
 }

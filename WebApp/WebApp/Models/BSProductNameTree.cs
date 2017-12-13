@@ -86,7 +86,7 @@ namespace WebApp
         }
         //Müşteri modelülü için marka model isim parametreleri için arama 
         //sonuçları liste ekler
-        List<Product> searchResults = new List<Product>();
+        public List<Product> searchResults = new List<Product>();
         public void ProductSearchName(BSTProductNode localRoot, string name)
         {
             if (localRoot != null)

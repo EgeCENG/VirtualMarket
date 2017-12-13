@@ -59,16 +59,13 @@ namespace WebApp.Controllers
                     {
 
                         case "0":
-                        
+                            _productRepository.DeleteByName(text);
                             break;
                         case "1":
-                            
+                           _productRepository.DeleteByBrand(text);
                             break;
                         case "2":
-                     
-                            break;
-                        case "3":
-                           
+                            _productRepository.DeleteByModel(text);
                             break;
 
                     }
@@ -78,13 +75,13 @@ namespace WebApp.Controllers
                     {
 
                         case "0":
-                            
+                            products = _productRepository.SearchByName(text);
                             break;
                         case "1":
-                          
+                            products = _productRepository.SearchByBrand(text);
                             break;
                         case "2":
-                         
+                            products = _productRepository.SearchByModel(text);
                             break;
                         case "3":
                             products =_productRepository.GetProductByWord(text);

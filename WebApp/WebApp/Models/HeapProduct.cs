@@ -11,18 +11,19 @@ namespace WebApp
     class HeapProduct
     {
         List<Product> productList = new List<Product>();
+        ProductRepository productRepository = new ProductRepository();
         private int _arrSize;//kapasite tutar
         private int _heapSize;//eleman sayısı tutar
         //Heap oluşturulacak product listesi
-        Product[] heapProductList;
+        public Product[] heapProductList;
         private JsonAdapter jsonAdapter;
         public HeapProduct(string productCat)
         {
             //productListe ürünler alındı kategori filtremesi yapıldıktan sonra fiyata göre sort edildi ardından Heap arraye  eklendi
-            productList = jsonAdapter.Deserialize<Product>();
+            productList = productRepository.GetAllProduct();
             var selectedProduct = productList.Where(x => x.Category == productCat);
             selectedProduct.OrderBy(x => x.Price);
-            _arrSize = productList.Count;
+            _arrSize = selectedProduct.Count();
             heapProductList = new Product[_arrSize];
             _heapSize = 0;
             foreach (var item in selectedProduct)

@@ -208,6 +208,7 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Product\Sales.cshtml" />
+    <Content Include="Views\User\Heap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

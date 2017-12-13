@@ -101,15 +101,19 @@ namespace WebApp.Data
 
             return true;
         }
-        public bool DeleteBy(Func<Product, bool> expression)
+        public bool DeleteByName(string name)
         {
-            List<Product> products = _jsonAdapter.Deserialize<Product>();
-            var select = products.Where(expression);
-            foreach (var item in select)
-            {
-                products.Remove(item);
-            }
-            _jsonAdapter.Serialize(products);
+           //TODO ağaçtan silme kodları gelecek
+            return true;
+        }
+        public bool DeleteByBrand(string name)
+        {
+            //TODO ağaçtan silme kodları gelecek
+            return true;
+        }
+        public bool DeleteByModel(string name)
+        {
+            //TODO ağaçtan silme kodları gelecek
             return true;
         }
         public void Update(Product product)
@@ -121,13 +125,52 @@ namespace WebApp.Data
             _jsonAdapter.Serialize(products);
 
         }
-        public List<Product> SearchBy(Func<Product, bool> expression)
+        //public List<Product> SearchBy(Func<Product, bool> expression)
+        //{
+        //    List<Product> products = _jsonAdapter.Deserialize<Product>();
+        //    return (List<Product>)products.Where(expression);
+        //}
+        
+        public List<Product> SearchByName(string name)
         {
-            List<Product> products = _jsonAdapter.Deserialize<Product>();
-            return (List<Product>)products.Where(expression);
+            BSProductNameTree tree = null;
+            foreach (var cat in CategoryHash.Keys)
+            {
+                tree = CategoryHash[cat] as BSProductNameTree;
+                tree.ProductSearchName(tree.GetRoot(),name);
+            }
+            return tree.searchResults;
         }
+        public List<Product> SearchByModel(string model)
+        {
+            BSProductNameTree tree = null;
+            foreach (var cat in CategoryHash.Keys)
+            {
+                tree = CategoryHash[cat] as BSProductNameTree;
+                tree.ProductSearchModel(tree.GetRoot(), model);
+            }
+            return tree.searchResults;
+        }
+        public List<Product> SearchByBrand(string brand)
+        {
+            BSProductNameTree tree = null;
+            foreach (var cat in CategoryHash.Keys)
+            {
+                tree = CategoryHash[cat] as BSProductNameTree;
+                tree.ProductSearchBrand(tree.GetRoot(), brand);
+            }
+            return tree.searchResults;
+        }
+        
+        public List<Product> GetProductByWord(string word)
+        {
+            if(DescWordsHash.ContainsKey(word))
+            return (List<Product>) DescWordsHash[word];
+            return null;
+        }
+
         public List<Product> GetAllProduct()
-        {  
+        {
             List<Product> products = new List<Product>();
             foreach (var cat in CategoryHash.Keys)
             {
@@ -136,16 +179,9 @@ namespace WebApp.Data
             }
             return products;
         }
-
-        public List<Product> GetProductByWord(string word)
-        {
-            if(DescWordsHash.ContainsKey(word))
-            return (List<Product>) DescWordsHash[word];
-            return null;
-        }
         #endregion
 
-        
+
 
         #region TreeProcess
         private void FillTree()
