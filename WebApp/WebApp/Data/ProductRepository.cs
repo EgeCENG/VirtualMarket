@@ -161,7 +161,6 @@ namespace WebApp.Data
                     {
                         BSProductNameTree categoryTree = CategoryHash[cat] as BSProductNameTree;
                         BSTProductNode node = new BSTProductNode(item);
-                        node.productList.Add(item);
                         categoryTree.InsertNode(node);
                     }
                 }
