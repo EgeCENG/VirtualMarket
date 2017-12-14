@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApp.Models;
 
 namespace WebApp
 {
@@ -47,6 +48,21 @@ namespace WebApp
                 localRoot.DisplayNode();
             }
         }
+        public List<ProductWithLevel> productWithLevels = new List<ProductWithLevel>();
+        public void FindProductWithLevel(BSTProductNode localRoot,int d)
+        {
+            if (localRoot != null)
+            {
+                d++;
+                foreach (var product in localRoot.productList)
+                {
+                    productWithLevels.Add(new ProductWithLevel { Product = product,Level = d});
+                }
+                FindProductWithLevel(localRoot.leftChild,d);
+                FindProductWithLevel(localRoot.rightChild,d);
+            }
+        }
+
         int tempDepth;
         public int FindDepth(BSTProductNode localRoot, int d)
         {
@@ -73,7 +89,7 @@ namespace WebApp
             }
             return count;
         }
-        List<int> levelOfProductCount = new List<int>();
+        public List<int> levelOfProductCount = new List<int>();
         public void FindLevelOfProductCount(BSTProductNode localRoot, int d)
         {
             if (localRoot != null)

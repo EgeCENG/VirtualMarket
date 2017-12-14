@@ -1,24 +1,79 @@
-﻿@model IEnumerable<WebApp.Product>
+﻿@model WebApp.Models.TreeViewModel
 
 @{
     ViewBag.Title = "Tree";
 }
 
 <h2>Tree</h2>
-<table class="table">
-    <tr>
-       
-        <th>
-    
-        </th>
-    </tr>
+<div class="row">
+    <table class="table">
+        @using (Html.BeginForm("Tree", "User"))
+        {
+            <tr>
+                <td>Category</td>
+                <td>@Html.TextBox("category", "", new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Get Tree Info" class="btn btn-default" />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<h2>Tree Info </h2>
+<div class="row">
+    <table class="table">
+        @if (Model != null)
+        {
+            <tr>
+                <td>Depth</td>
+                <td>Element Count</td>
 
+                @for (int i=0; i<Model.CountOfElementEachLevel.Count;i++)
+                                                                   {
+                <td>Level @i</td>
+                }
 
-    <tr>
-        <td>
-          
-        </td>
-    </tr>
+            </tr>
+            <tr>
+                <td>@Model.Depth</td>
+                <td>@Model.ElementCount</td>
 
+                @foreach (var item in Model.CountOfElementEachLevel)
+                {
+                <td>@item</td>
+                }
 
-</table>
+            </tr>
+        }
+    </table>
+</div>
+<h2>Tree Elements With Level </h2>
+<div class="row">
+    <table class="table">
+        <tr>
+            <td>Level</td>
+            <td>Category</td>
+            <td>Name</td>
+            <td>Brand</td>
+            <td>Model</td>
+            <td>Price</td>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model.productWithLevels)
+             {
+                 <tr>
+                     <td>@item.Level</td>
+                     <td>@item.Product.Category</td>
+                     <td>@item.Product.Name</td>
+                     <td>@item.Product.Brand</td>
+                     <td>@item.Product.Model</td>
+                     <td>@item.Product.Price</td>
+                 </tr>
+             }
+        }
+        
+    </table>
+</div>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using Newtonsoft.Json;
+using WebApp.Models;
 
 namespace WebApp.Data
 {
@@ -246,8 +247,22 @@ namespace WebApp.Data
             }
             return products;
         }
+
+
         #endregion
 
+        public TreeViewModel TreeInfo(string category)
+        {
+            TreeViewModel treeViewModel = new TreeViewModel();
+            var tree = CategoryHash[category] as BSProductNameTree;
+            treeViewModel.Depth = tree.FindDepth(tree.GetRoot(),-1);
+            treeViewModel.ElementCount = tree.CountOfProduct(tree.GetRoot());
+            tree.FindLevelOfProductCount(tree.GetRoot(),-1);
+            treeViewModel.CountOfElementEachLevel = tree.levelOfProductCount;
+            tree.FindProductWithLevel(tree.GetRoot(),-1);
+            treeViewModel.productWithLevels = tree.productWithLevels;
+            return treeViewModel;
+        }
 
 
         #region TreeProcess

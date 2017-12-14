@@ -137,13 +137,13 @@ namespace WebApp.Controllers
 
         public ActionResult Tree()
         {
+            
             return View();
         }
         [HttpPost]
         public ActionResult Tree(string category)
         {
-
-            return View();
+            return View(_productRepository.TreeInfo(category));
         }
 
         public ActionResult Heap()
@@ -192,7 +192,7 @@ namespace WebApp.Controllers
 
                 products.AddRange(sale.ShoppingCart.ProductList);
             }
-            var a = products.Distinct();
+            var a = products.Distinct().ToArray();
             return View(products);
         }
     } 

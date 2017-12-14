@@ -161,8 +161,10 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\HeapProduct.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductWithLevel.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
+    <Compile Include="Models\TreeViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
