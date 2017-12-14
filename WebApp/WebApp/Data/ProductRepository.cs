@@ -180,6 +180,28 @@ namespace WebApp.Data
             return tree.searchResults;
         }
 
+        public List<Product> SearchByPrice(double max,double min,string name)
+        {
+            BSProductNameTree tree = null;
+            List<Product> products = new List<Product>();
+            foreach (var cat in CategoryHash.Keys)
+            {
+                tree = CategoryHash[cat] as BSProductNameTree;
+                products.AddRange(tree.SearchByPrice(tree.GetRoot(), min, max,name));
+            }
+            return products;
+        }
+        public List<Product> SearchByPrice(double max, double min)
+        {
+            BSProductNameTree tree = null;
+            List<Product> products = new List<Product>();
+            foreach (var cat in CategoryHash.Keys)
+            {
+                tree = CategoryHash[cat] as BSProductNameTree;
+                products.AddRange(tree.SearchByPrice(tree.GetRoot(), min, max));
+            }
+            return products;
+        }
         public List<Product> GetProductByWord(string word)
         {
             if (DescWordsHash.ContainsKey(word))

@@ -185,5 +185,6 @@ namespace WebApp.Controllers
             List<Sale> sales = _saleRepository.GetAll();
             return View(sales);
         }
+
     }
 }

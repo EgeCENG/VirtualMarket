@@ -18,6 +18,7 @@ namespace WebApp.Controllers
         public ActionResult Exit()
         {
             Session["User"] = null;
+            Session["Cart"] = null;
             return RedirectToAction("Index");
         }
     }

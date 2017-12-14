@@ -5,14 +5,14 @@
 }
 
 <h2>Index</h2>
-@using (Html.BeginForm("Search","User"))
+@using (Html.BeginForm("Index","User"))
 {
     <div class="form-group">
         <div class="col-md-12">
             Search
         </div>
         <div class="col-md-12">
-            @Html.TextBox("search")
+            @Html.TextBox("search","", new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
@@ -20,7 +20,7 @@
             Min
         </div>
         <div class="col-md-12">
-            @Html.TextBox("min")
+            @Html.TextBox("min", "", new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
@@ -28,7 +28,7 @@
             Max
         </div>
         <div class="col-md-12">
-            @Html.TextBox("max")
+            @Html.TextBox("max", "", new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
@@ -39,6 +39,9 @@
 }
 <table class="table">
     <tr>
+        <th>
+            #
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Category)
         </th>
@@ -55,52 +58,53 @@
             @Html.DisplayNameFor(model => model.Count)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cost)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Desc)
         </th>
         <th>
-          Cart
+            Cart
         </th>
         <th></th>
     </tr>
     
     @if (Model != null)
     {
-        foreach (var item in Model) {
-             <tr>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.Category)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.Name)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.Brand)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.Model)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.Count)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.Cost)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.Price)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.Desc)
-                 </td>
-                 <td>
-                     @Html.ActionLink("Add to shopping cart", "AddToShoppingCart", new {productId=item.Id }) |
-                 </td>
-             </tr>
+        int i = 0;
+        foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                
+                <td>
+                    @i
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Desc)
+                </td>
+                <td>
+                    @Html.ActionLink("Add to shopping cart", "AddToShoppingCart", new {productId = item.Id}) |
+                </td>
+            </tr>
     }
 
 }

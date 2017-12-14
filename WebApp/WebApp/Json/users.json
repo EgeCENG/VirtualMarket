@@ -1,1 +1,6 @@
-[{"Id":"14a800ae-9854-4aaa-9f23-d8c454f91763","Username":"test","Password":"a","Name":"mahmut","Job":"yazılım","Sex":true,"Age":20,"Role":0},{"Id":"1","Username":"batu","Password":"123","Name":"mahmut","Job":"yazılım","Sex":true,"Age":20,"Role":1},{"Id":"0e13bf09-104d-4e69-bc06-880f4ecc8047","Username":"batuhan","Password":"123","Name":"batuhan","Job":"yazılım","Sex":true,"Age":21,"Role":0}]
+[{"Id":"22ecad8b-a04d-4813-99ee-741acd81a50c","Username":"batu","Password":"123","Name":"batuhan","Job":"yazılım","Salery":100.0,"Sex":true,"Age":21,"Role":1}
+,{"Id":"e947e85c-b7a3-47ce-b75c-278d604cbc0d","Username":"testUser1","Password":"123","Name":"Ekrem","Job":"inşaat","Salery":120.0,"Sex":true,"Age":25,"Role":0}
+,{"Id":"63a8a98f-a166-4031-a6ab-23a2759dfcf2","Username":"testUser2","Password":"123","Name":"atakan","Job":"manav","Salery":80.0,"Sex":true,"Age":50,"Role":0}
+,{"Id":"9ead65c2-f6b4-40c2-a5a1-c3cb6642efd1","Username":"testUser3","Password":"123","Name":"Begüm","Job":"yazılım","Salery":50.0,"Sex":false,"Age":22,"Role":0}
+,{"Id":"63a8a98f-a166-4031-a6ab-23a2759dfc11","Username":"testUser4","Password":"123","Name":"Merve","Job":"satış danışmanı","Salery":30.0,"Sex":false,"Age":19,"Role":0}
+,{"Id":"27432ba8-916d-41cb-a15e-a4fb52fa1994","Username":"batuhan","Password":"123","Name":"batuhan","Job":"müzik","Salery":200.0,"Sex":true,"Age":23,"Role":0}]

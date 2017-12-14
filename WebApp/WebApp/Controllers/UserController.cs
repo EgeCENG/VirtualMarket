@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Data;
@@ -28,69 +30,30 @@ namespace WebApp.Controllers
         {
             return View(_productRepository.GetAllProduct());
         }
-
-        public ActionResult Search(string search,double max,double min)
+        [HttpPost]
+        public ActionResult Index(string search, double max=0,double min=0)
         {
+            List<Product> products = new List<Product>();
             if (max > 0)
             {
-                if (search != null)
+                if (search != "")
                 {
-                    //TODO Search by Name , Price
+                   products = _productRepository.SearchByPrice(max, min, search);
                 }
                 else
                 {
-                    //TODO Search by Price
+                   products = _productRepository.SearchByPrice(max, min);
                 }
             }
             else
             {
                 if (search != null)
                 {
-                    //TODO Search by Name
+                   products = _productRepository.SearchByName(search);
                 }
             }
-            // Mock data
-            List<Product> products = new List<Product>
-            {
-                new Product
-                {
-                    Brand = "test",
-                    Category = "test",
-                    Cost = 5000,
-                    Count = 20,
-                    Desc = "asdasdsa",
-                    Id = "TestID",
-                    Model = "modeltest",
-                    Name = "nameTest",
-                    Price = 6000
-                },
-                new Product
-                {
-                    Brand = "test",
-                    Category = "test",
-                    Cost = 5000,
-                    Count = 20,
-                    Desc = "asdasdsa",
-                    Id = "TestID2",
-                    Model = "modeltest",
-                    Name = "nameTest",
-                    Price = 6000
-                },
-                new Product
-                {
-                    Brand = "test",
-                    Category = "test",
-                    Cost = 5000,
-                    Count = 20,
-                    Desc = "asdasdsa",
-                    Id = "TestID3",
-                    Model = "modeltest",
-                    Name = "nameTest",
-                    Price = 6000
-                }
-            };
 
-            return RedirectToAction("Index",products);
+            return View(products);
         }
 
         
@@ -100,6 +63,7 @@ namespace WebApp.Controllers
             ShoppingCart shoppingCart = Session["Cart"] as ShoppingCart;
             if (shoppingCart != null)
             {
+                product.Count = 1;
                 shoppingCart.ProductList.Add(product);
             }
             else
@@ -162,7 +126,7 @@ namespace WebApp.Controllers
             if (userRepo != null)
             {
                 Session["User"] = userRepo;
-                return RedirectToAction("Index","Product");
+                return RedirectToAction("Index","Home");
             }
             else
             {
@@ -194,10 +158,42 @@ namespace WebApp.Controllers
             return View(heapProduct.heapProductList);
         }
 
-        public ActionResult SuggestSystem()
+        public ActionResult SuggestionSystems()
         {
-            return View();
-        }
+            User user = Session["User"] as User;
+            List<Sale> saleUsers =_saleRepository.GetAll();
+            List<ViewModel> viewModel = new List<ViewModel>();
 
-    }
+            for (int i = 0;i<saleUsers.Count;i++)
+            {
+                double sex = 100;
+                double job = 100;
+                double salery = Math.Pow(saleUsers[i].User.Salery - user.Salery, 2);
+                if (saleUsers[i].User.Sex == user.Sex)
+                {
+                    sex = 0;
+                }
+                if (saleUsers[i].User.Job == user.Job)
+                {
+                    job = 0;
+                }
+                double age = Math.Pow(saleUsers[i].User.Age - user.Age, 2);
+                double dist = Math.Sqrt(sex + job + salery + age);
+                if(dist != 0)
+                viewModel.Add(new ViewModel{Distance = dist,User= saleUsers[i].User });
+            }
+            viewModel.OrderBy(x => x.Distance).Take(3);
+            
+            List<Product> products = new List<Product>();
+
+            foreach (var item in viewModel)
+            {
+                var sale = _saleRepository.GetByUser(item.User);
+
+                products.AddRange(sale.ShoppingCart.ProductList);
+            }
+            var a = products.Distinct();
+            return View(products);
+        }
+    } 
 }

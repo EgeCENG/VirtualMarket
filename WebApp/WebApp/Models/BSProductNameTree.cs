@@ -346,5 +346,20 @@ namespace WebApp
             }
             return selectedProducts;
         }
+        public List<Product> SearchByPrice(BSTProductNode localRoot, double minPrice, double maxPrice,string name)
+        {
+            List<Product> selectedProducts = new List<Product>();
+            if (localRoot != null)
+            {
+                foreach (var item in localRoot.productList)
+                {
+                    if (item.Price >= minPrice && item.Price <= maxPrice && item.Name==name)
+                    {
+                        selectedProducts.Add(item);
+                    }
+                }
+            }
+            return selectedProducts;
+        }
     }
 }

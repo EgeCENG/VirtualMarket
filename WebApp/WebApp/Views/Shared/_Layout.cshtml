@@ -29,16 +29,18 @@
                             if (user.Role == 0)
                             {
                                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                                <li>@Html.ActionLink("User", "Index", "User")</li>
+                                <li>@Html.ActionLink("Products", "Index", "User")</li>
                                 <li>@Html.ActionLink("Shopping Cart", "ShoppingCart", "User")</li>
                                 <li>@Html.ActionLink("Tree", "Tree", "User")</li>
                                 <li>@Html.ActionLink("Heap", "Heap", "User")</li>
+                                <li>@Html.ActionLink("Suggestion Systems", "SuggestionSystems", "User")</li>
                                 <li>@Html.ActionLink("Exit", "Exit", "Home")</li>
                             }
                             else
                             {
                                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                                 <li>@Html.ActionLink("Staff", "Index", "Product")</li>
+                                <li>@Html.ActionLink("Sales", "Sales", "Product")</li>
                                 <li>@Html.ActionLink("Exit", "Exit", "Home")</li>
                             }
                         }
