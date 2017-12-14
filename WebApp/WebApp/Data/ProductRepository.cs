@@ -151,12 +151,18 @@ namespace WebApp.Data
         //}
         public void Update(Product product)
         {
+           // BSProductNameTree bsProductNameTree
             List<Product> products = _jsonAdapter.Deserialize<Product>();
             Product dbProduct = products.Find(x => x.Id == product.Id);
             products.Remove(dbProduct);
             products.Add(product);
             _jsonAdapter.Serialize(products);
-
+            var category = CategoryHash.Keys;
+            foreach (var cat in category)
+            {
+                BSProductNameTree bsProductNameTree = CategoryHash[cat] as BSProductNameTree;
+                bsProductNameTree.UpdateProduct(bsProductNameTree.GetRoot(), product);
+            }           
         }
         //public List<Product> SearchBy(Func<Product, bool> expression)
         //{

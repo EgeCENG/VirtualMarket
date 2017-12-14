@@ -324,6 +324,7 @@ namespace WebApp
                         item.Model = updatedProduct.Model;
                         item.Count = updatedProduct.Count;
                         item.Price = updatedProduct.Price;
+                        return;
                     }
                 }
                 UpdateProduct(localRoot.leftChild, updatedProduct);
