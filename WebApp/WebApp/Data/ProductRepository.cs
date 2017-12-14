@@ -132,8 +132,23 @@ namespace WebApp.Data
         public bool DeleteByModel(string model)
         {
             //TODO ağaçtan silme kodları gelecek
+            var category = CategoryHash.Keys;
+            foreach (var cat in category)
+            {
+                BSProductNameTree bsProductNameTree = CategoryHash[cat] as BSProductNameTree;
+                bsProductNameTree.DeleteModel(bsProductNameTree.GetRoot(),model);
+            }
+            List<Product> products = GetAllProduct();
+            products.Remove(products.Find(x => x.Model == model));
+            _jsonAdapter.Serialize(products);
             return true;
         }
+        //public bool DeleteByWord(string word)
+        //{
+        //    if (DescWordsHash.ContainsKey(word))
+        //        DescWordsHash.Remove(word);
+        //    return true;
+        //}
         public void Update(Product product)
         {
             List<Product> products = _jsonAdapter.Deserialize<Product>();
@@ -153,9 +168,13 @@ namespace WebApp.Data
         {
             BSProductNameTree tree = null;
             foreach (var cat in CategoryHash.Keys)
-            {
+            {               
                 tree = CategoryHash[cat] as BSProductNameTree;
                 tree.ProductSearchName(tree.GetRoot(), name);
+                if (tree.searchResults.Count > 0)
+                {
+                    break;
+                }
             }
             return tree.searchResults;
         }
@@ -166,6 +185,10 @@ namespace WebApp.Data
             {
                 tree = CategoryHash[cat] as BSProductNameTree;
                 tree.ProductSearchModel(tree.GetRoot(), model);
+                if (tree.searchResults.Count > 0)
+                {
+                    break;
+                }
             }
             return tree.searchResults;
         }
@@ -176,6 +199,10 @@ namespace WebApp.Data
             {
                 tree = CategoryHash[cat] as BSProductNameTree;
                 tree.ProductSearchBrand(tree.GetRoot(), brand);
+                if (tree.searchResults.Count > 0)
+                {
+                    break;
+                }
             }
             return tree.searchResults;
         }

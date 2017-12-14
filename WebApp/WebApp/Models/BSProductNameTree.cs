@@ -96,10 +96,10 @@ namespace WebApp
                     foreach (var item in localRoot.productList)
                     {
                         searchResults.Add(item);
-                    }
-                    ProductSearchName(localRoot.leftChild, name);
-                    ProductSearchName(localRoot.rightChild, name);
+                    }                    
                 }
+                ProductSearchName(localRoot.leftChild, name);
+                ProductSearchName(localRoot.rightChild, name);
             }
         }
         public void ProductSearchBrand(BSTProductNode localRoot, string brand)
@@ -116,6 +116,7 @@ namespace WebApp
                 ProductSearchBrand(localRoot.leftChild, brand);
                 ProductSearchBrand(localRoot.rightChild, brand);
             }
+           
         }
         public void ProductSearchModel(BSTProductNode localRoot, string model)
         {
@@ -130,7 +131,7 @@ namespace WebApp
                 }
                 ProductSearchBrand(localRoot.leftChild, model);
                 ProductSearchBrand(localRoot.rightChild, model);
-            }
+            }            
         }
         public void DeleteName(string name)
         {
@@ -180,11 +181,11 @@ namespace WebApp
         {
             if (localRoot != null)
             {
-                foreach (var item in localRoot.productList)
+                for(int i=0;i<localRoot.productList.Count;i++)
                 {
-                    if (brand.Equals(item.Brand))
+                    if (brand.Equals(localRoot.productList[i].Brand))
                     {
-                        localRoot.productList.Remove(item);
+                        localRoot.productList.Remove(localRoot.productList[i]);
                         if (localRoot.productList.Count == 0)
                         {
                             break;
@@ -200,18 +201,17 @@ namespace WebApp
         {
             if (localRoot != null)
             {
-                foreach (var item in localRoot.productList)
+                for (int i = 0; i < localRoot.productList.Count; i++)
                 {
-                    if (model.Equals(item.Model))
+                    if (model.Equals(localRoot.productList[i].Model))
                     {
-                        localRoot.productList.Remove(item);
+                        localRoot.productList.Remove(localRoot.productList[i]);
                     }
-                }
+                }               
                 DeleteModel(localRoot.leftChild, model);
                 DeleteModel(localRoot.rightChild, model);
             }
         }
-
         //Yeni gelen düğüm ile ilgili alan ağaçta varmı o kontrol ediliyor.
         public bool Search(BSTProductNode localRoot, string pName)
         {
